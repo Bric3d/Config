@@ -1,0 +1,84 @@
+" **************************************************************************** "
+"                                                                              "
+"                                                         :::      ::::::::    "
+"    .myvimrc                                           :+:      :+:    :+:    "
+"                                                     +:+ +:+         +:+      "
+"    By: zaz <zaz@staff.42.fr>                      +#+  +:+       +#+         "
+"                                                 +#+#+#+#+#+   +#+            "
+"    Created: 2013/06/15 12:36:36 by zaz               #+#    #+#              "
+"    Updated: 2014/08/05 12:52:51 by bbecker          ###   ########.fr        "
+"                                                                              "
+" **************************************************************************** "
+
+"Put your custom Vim configuration here
+
+"Better command completion
+"set wildmenu
+"set wildmode=list:longest
+
+"Show current line
+"set cursorline
+"
+
+"backup and temp directories"
+set backup
+set backupdir=~/.vim/backup/
+set directory=~/.vim/tmp/
+
+"Syntax"
+set showmatch
+set nu
+sy on
+set cc=80
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set smarttab
+set mouse=a
+set list
+set listchars=nbsp:¤,tab:>-,trail:¤,extends:>,precedes:<,trail:·,eol:$
+set statusline=%-F
+set nohls
+
+imap <Esc>Oq 1
+imap <Esc>Or 2
+imap <Esc>Os 3
+imap <Esc>Ot 4
+imap <Esc>Ou 5
+imap <Esc>Ov 6
+imap <Esc>Ow 7
+imap <Esc>Ox 8
+imap <Esc>Oy 9
+imap <Esc>Op 0
+imap <Esc>On .
+imap <Esc>OR *
+imap <Esc>OQ /
+imap <Esc>Ol +
+imap <Esc>OS -
+
+" setglobal relativenumber
+autocmd WinEnter * :setlocal relativenumber
+autocmd WinLeave,FocusLost * :setlocal number
+autocmd InsertEnter * :setlocal number
+autocmd InsertLeave * :setlocal relativenumber
+function! g:ToggleNuMode()
+    if(&relativenumber == 1)
+        set number
+    else
+        set relativenumber
+    endif
+endfunc
+map <C-l> :call g:ToggleNuMode()<CR>
+
+"Solarized"
+syntax enable
+set background=dark
+
+"templates"
+au BufNewFile *.c,*.h exe "Stdheader"
+au BufNewFile *.h exe "normal dd"
+au BufNewFile *.h so ~/Config/template_ifndef
+au BufNewFile *.h exe "normal Gdd"
+au BufNewFile *.h exe "g/#endif/s//#endif \\/\*! " . toupper(substitute(expand("%"), "\\.", "_", "")) . " *\\/"
+au BufNewFile *.h exe "g/#ifndef.*/s//#ifndef " . toupper(substitute(expand("%"), "\\.", "_", ""))
+au BufNewFile *.h exe "g/# define.*/s//# define " . toupper(substitute(expand("%"), "\\.", "_", ""))
